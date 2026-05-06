@@ -1,9 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonActions : MonoBehaviour
 {
-    public List<GameObject> layer = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> layer = new List<GameObject>();
+
+    [SerializeField]
+    private List<Button> buttons = new List<Button>();
 
     private void Start()
     {
@@ -19,11 +24,21 @@ public class ButtonActions : MonoBehaviour
         }
     }
 
+    private void ActivateButtons()
+    {
+        foreach (Button button in buttons)
+        {
+            button.interactable = true;
+        }
+    }
+
     public void ActivateLayer(int layerIndex)
     {
         DeactivateLayer();
+        ActivateButtons();
         if (layerIndex >= 0 && layerIndex < layer.Count)
         {
+            buttons[layerIndex].interactable = false;
             layer[layerIndex].SetActive(true);
         }
     }
