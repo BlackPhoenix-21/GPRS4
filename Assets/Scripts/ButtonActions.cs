@@ -41,13 +41,13 @@ public class ButtonActions : MonoBehaviour
     {
         foreach (GameObject obj in parentLayer)
         {
-            obj.transform.parent = LowLayer.transform;
+            obj.transform.SetParent(LowLayer.transform);
         }
     }
 
     private void SetHighLayer(GameObject obj)
     {
-        obj.transform.parent = HighLayer.transform;
+        obj.transform.SetParent(HighLayer.transform);
     }
 
     private void DeactivateLayer()
