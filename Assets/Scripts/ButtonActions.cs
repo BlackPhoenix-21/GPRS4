@@ -4,6 +4,14 @@ using UnityEngine.UI;
 
 public class ButtonActions : MonoBehaviour
 {
+    private List<GameObject> parentLayer = new List<GameObject>();
+
+    [SerializeField]
+    private GameObject LowLayer;
+
+    [SerializeField]
+    private GameObject HighLayer;
+
     [SerializeField]
     private List<GameObject> layer = new List<GameObject>();
 
@@ -12,10 +20,34 @@ public class ButtonActions : MonoBehaviour
 
     private void Start()
     {
+        GetParentLayer();
         DeactivateLayer();
         ActivateButtons();
+        SetLowLayer();
+        SetHighLayer(parentLayer[0]);
         buttons[0].interactable = false;
         layer[0].SetActive(true);
+    }
+
+    private void GetParentLayer()
+    {
+        foreach (GameObject obj in layer)
+        {
+            parentLayer.Add(obj.transform.parent.gameObject);
+        }
+    }
+
+    private void SetLowLayer()
+    {
+        foreach (GameObject obj in parentLayer)
+        {
+            obj.transform.parent = LowLayer.transform;
+        }
+    }
+
+    private void SetHighLayer(GameObject obj)
+    {
+        obj.transform.parent = HighLayer.transform;
     }
 
     private void DeactivateLayer()
@@ -42,6 +74,8 @@ public class ButtonActions : MonoBehaviour
         {
             buttons[layerIndex].interactable = false;
             layer[layerIndex].SetActive(true);
+            SetLowLayer();
+            SetHighLayer(parentLayer[layerIndex]);
         }
     }
 }
