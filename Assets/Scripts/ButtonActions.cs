@@ -13,6 +13,8 @@ public class ButtonActions : MonoBehaviour
     private void Start()
     {
         DeactivateLayer();
+        ActivateButtons();
+        buttons[0].interactable = false;
         layer[0].SetActive(true);
     }
 
