@@ -7,10 +7,10 @@ public class ButtonActions : MonoBehaviour
     private List<GameObject> parentLayer = new List<GameObject>();
 
     [SerializeField]
-    private GameObject LowLayer;
+    private GameObject lowLayer;
 
     [SerializeField]
-    private GameObject HighLayer;
+    private GameObject highLayer;
 
     [SerializeField]
     private List<GameObject> layer = new List<GameObject>();
@@ -41,13 +41,13 @@ public class ButtonActions : MonoBehaviour
     {
         foreach (GameObject obj in parentLayer)
         {
-            obj.transform.SetParent(LowLayer.transform);
+            obj.transform.SetParent(lowLayer.transform);
         }
     }
 
     private void SetHighLayer(GameObject obj)
     {
-        obj.transform.SetParent(HighLayer.transform);
+        obj.transform.SetParent(highLayer.transform);
     }
 
     private void DeactivateLayer()
