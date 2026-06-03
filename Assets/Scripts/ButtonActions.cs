@@ -1,20 +1,61 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonActions : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> layers = new List<GameObject>();
+    [SerializeField]
+    private GameObject canvas;
 
-    public void OpenLayer(int index)
+    private List<GameObject> layer = new List<GameObject>();
+    private List<Button> buttons = new List<Button>();
+
+    [SerializeField]
+    private GameObject lowLayer;
+
+    [SerializeField]
+    private GameObject highLayer;
+
+    private void Start() { }
+
+    private void GetAllButtons()
     {
-        if (index < 0 || index >= layers.Count)
+        Transform buttonsParent = canvas.transform.Find("Buttons");
+        if (buttonsParent != null)
         {
-            Debug.LogError("Falscher Layer Index: " + index);
-            return;
+            foreach (Transform button in buttonsParent)
+            {
+                Button btn = button.GetComponent<Button>();
+                if (btn != null)
+                {
+                    buttons.Add(btn);
+                }
+            }
         }
+    }
 
-        layers[index].transform.SetAsLastSibling();
+    private void GetAllLayers()
+    {
+        Transform layersParent = canvas.transform.Find("Layers");
+        if (layersParent != null)
+        {
+            foreach (Transform layer in layersParent)
+            {
+                this.layer.Add(layer.gameObject);
+            }
+        }
+    }
 
-        Debug.Log("Open Layer: " + index);
+    public void ActivateLayer(int layerIndex)
+    {
+        DeactivateLayer();
+        ActivateButtons();
+        if (layerIndex >= 0 && layerIndex < layer.Count)
+        {
+            buttons[layerIndex].interactable = false;
+            layer[layerIndex].SetActive(true);
+            SetLowLayer();
+            SetHighLayer(parentLayer[layerIndex]);
+        }
     }
 }
