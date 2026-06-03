@@ -21,7 +21,7 @@ public class ButtonActions : MonoBehaviour
 
     private List<GameObject> layers = new List<GameObject>();
     private List<Button> buttons = new List<Button>();
-    private List<GameObject> layerItems = new List<GameObject>();
+    internal List<GameObject> layerItems { get; private set; } = new List<GameObject>();
 
     private void Start()
     {
