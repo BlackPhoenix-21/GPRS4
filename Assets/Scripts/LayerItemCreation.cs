@@ -13,13 +13,13 @@ public class LayerItemCreation : MonoBehaviour
     private GameObject itemPrefab;
 
     [SerializeField]
-    private ItemsScriptiableObject[] itemsData;
+    private ItemsScriptableObject[] itemsData;
 
-    private Dictionary<int, List<ItemsScriptiableObject>> itemsByLayer =
-        new Dictionary<int, List<ItemsScriptiableObject>>();
+    private Dictionary<int, List<ItemsScriptableObject>> itemsByLayer =
+        new Dictionary<int, List<ItemsScriptableObject>>();
 
-    private float itemOffsetPositionY = 50f;
-    private float itemOffsetPositionX = 50f;
+    private float itemOffsetPositionY = 100f;
+    private float itemOffsetPositionX = 100f;
     private int itemsPerRow = 3;
     private int currentItemCount = 0;
     private Vector2 itemPosition;
@@ -27,35 +27,86 @@ public class LayerItemCreation : MonoBehaviour
     private ItemCategory currentCategory = ItemCategory.None;
     private List<GameObject> groupedItem = new List<GameObject>();
 
+    private ButtonActions buttonActions;
+
     private void Start()
     {
+        buttonActions = FindAnyObjectByType<ButtonActions>();
+        if (buttonActions != null)
+        {
+            buttonActions.OnFinishedSetup += SetUp;
+        }
+        else
+        {
+            Debug.LogError("ButtonActions not found in scene");
+        }
+    }
+
+    private void SetUp()
+    {
         itemPosition = itemStartPosition;
+        OrganizeItemsByLayer();
         SetUpItems();
+    }
+
+    private void OrganizeItemsByLayer()
+    {
+        if (itemsData == null || itemsData.Length == 0)
+        {
+            Debug.LogWarning("No items data provided");
+            return;
+        }
+
+        for (int i = 0; i < (int)CharacterLayer.Accessories + 1; i++)
+        {
+            itemsByLayer[i] = new List<ItemsScriptableObject>();
+        }
+
+        foreach (ItemsScriptableObject item in itemsData)
+        {
+            int layerIndex = (int)item.characterLayer - 1; // Enum starts with None at 0
+            if (itemsByLayer.ContainsKey(layerIndex))
+            {
+                itemsByLayer[layerIndex].Add(item);
+            }
+        }
     }
 
     private void SetUpItems()
     {
-        ButtonActions buttonActions = FindAnyObjectByType<ButtonActions>();
+        if (buttonActions == null)
+        {
+            Debug.LogError("ButtonActions not found in scene");
+            return;
+        }
+
         List<GameObject> layerItemsParent = buttonActions.layerItems;
+        if (layerItemsParent == null || layerItemsParent.Count == 0)
+        {
+            Debug.LogWarning("No layer items parent found");
+            return;
+        }
+
         for (int i = 0; i < layerItemsParent.Count; i++)
         {
-            foreach (ItemsScriptiableObject item in itemsByLayer[i])
+            if (itemsByLayer.ContainsKey(i))
             {
-                GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
-                newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
-                Debug.LogWarning(
-                    "Setting item: " + item.itemName + " in category: " + item.itemCategory
-                );
-                currentItemCount++;
+                foreach (ItemsScriptableObject item in itemsByLayer[i])
+                {
+                    GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
+                    newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
+                    //Debug.LogWarning("Setting item: " + item.itemName + " in category: " + item.itemCategory);
+                    currentItemCount++;
 
-                if (currentItemCount % itemsPerRow == 0)
-                {
-                    itemPosition.x = itemStartPosition.x;
-                    itemPosition.y -= itemOffsetPositionY;
-                }
-                else
-                {
-                    itemPosition.x += itemOffsetPositionX;
+                    if (currentItemCount % itemsPerRow == 0)
+                    {
+                        itemPosition.x = itemStartPosition.x;
+                        itemPosition.y -= itemOffsetPositionY;
+                    }
+                    else
+                    {
+                        itemPosition.x += itemOffsetPositionX;
+                    }
                 }
             }
         }
@@ -68,44 +119,58 @@ public class LayerItemCreation : MonoBehaviour
             Destroy(item);
         }
         groupedItem.Clear();
-
+        itemPosition = itemStartPosition;
+        currentItemCount = 0;
         currentCategory = category;
+        if (buttonActions == null)
+        {
+            Debug.LogError("ButtonActions not found in scene");
+            return;
+        }
 
-        ButtonActions buttonActions = FindAnyObjectByType<ButtonActions>();
         List<GameObject> layerItemsParent = buttonActions.layerItems;
 
         for (int i = 0; i < layerItemsParent.Count; i++)
         {
-            foreach (ItemsScriptiableObject item in itemsByLayer[i])
+            if (itemsByLayer.ContainsKey(i))
             {
-                if (item.itemCategory != category)
+                foreach (ItemsScriptableObject item in itemsByLayer[i])
                 {
-                    continue;
-                }
+                    if (item.itemCategory != category)
+                    {
+                        continue;
+                    }
 
-                GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
-                newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
-                Debug.LogWarning("Setting item: " + item.itemName + " in category: " + category);
-                currentItemCount++;
+                    GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
+                    newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
+                    groupedItem.Add(newItem);
+                    //Debug.LogWarning(
+                    //    "Setting item: " + item.itemName + " in category: " + category
+                    //);
+                    currentItemCount++;
 
-                if (currentItemCount % itemsPerRow == 0)
-                {
-                    itemPosition.x = itemStartPosition.x;
-                    itemPosition.y -= itemOffsetPositionY;
-                }
-                else
-                {
-                    itemPosition.x += itemOffsetPositionX;
+                    if (currentItemCount % itemsPerRow == 0)
+                    {
+                        itemPosition.x = itemStartPosition.x;
+                        itemPosition.y -= itemOffsetPositionY;
+                    }
+                    else
+                    {
+                        itemPosition.x += itemOffsetPositionX;
+                    }
                 }
             }
         }
 
-        // Button that was clicked to trigger this method
-        Button clickedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-        if (clickedButton != null)
+        if (EventSystem.current?.currentSelectedGameObject != null)
         {
-            clickedButton.onClick.RemoveAllListeners();
-            clickedButton.onClick.AddListener(() => ClearGroupedItem());
+            Button clickedButton =
+                EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            if (clickedButton != null)
+            {
+                clickedButton.onClick.RemoveAllListeners();
+                clickedButton.onClick.AddListener(() => ClearGroupedItem());
+            }
         }
     }
 
@@ -116,13 +181,18 @@ public class LayerItemCreation : MonoBehaviour
             Destroy(item);
         }
         groupedItem.Clear();
+        itemPosition = itemStartPosition;
+        currentItemCount = 0;
 
-        // Button that was clicked to trigger this method
-        Button clickedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-        if (clickedButton != null)
+        if (EventSystem.current?.currentSelectedGameObject != null)
         {
-            clickedButton.onClick.RemoveAllListeners();
-            clickedButton.onClick.AddListener(() => SetGroupedItem(currentCategory));
+            Button clickedButton =
+                EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+            if (clickedButton != null)
+            {
+                clickedButton.onClick.RemoveAllListeners();
+                clickedButton.onClick.AddListener(() => SetGroupedItem(currentCategory));
+            }
         }
     }
 }

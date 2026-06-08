@@ -5,10 +5,10 @@ public class CharacterDesigner : MonoBehaviour { }
 public enum CharacterLayer
 {
     None,
+    Clothes,
     Hair,
     Face,
     Body,
-    Clothes,
     Accessories,
 }
 

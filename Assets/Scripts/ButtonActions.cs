@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonActions : MonoBehaviour
 {
+    public event Action OnFinishedSetup;
+
     [SerializeField]
     private GameObject canvas;
 
@@ -11,7 +14,7 @@ public class ButtonActions : MonoBehaviour
     private string parentLayerName = "ParentLayer";
 
     [SerializeField]
-    private string partenButtonName = "ParentButton";
+    private string parentButtonName = "ParentButton";
 
     [SerializeField]
     private GameObject lowLayer;
@@ -26,15 +29,17 @@ public class ButtonActions : MonoBehaviour
     private void Start()
     {
         GetAllButtons();
-        GetAllLayers();
+        GetAllLayers(parentLayerName);
 
         layers[0].transform.SetParent(highLayer.transform);
         buttons[0].interactable = false;
+
+        OnFinishedSetup?.Invoke();
     }
 
     private void GetAllButtons()
     {
-        Transform buttonsParent = canvas.transform.Find(partenButtonName);
+        Transform buttonsParent = canvas.transform.Find(parentButtonName);
         if (buttonsParent != null)
         {
             foreach (Transform button in buttonsParent)
@@ -48,9 +53,9 @@ public class ButtonActions : MonoBehaviour
         }
     }
 
-    private void GetAllLayers()
+    private void GetAllLayers(string layerName)
     {
-        Transform layersParent = canvas.transform.Find(parentLayerName);
+        Transform layersParent = canvas.transform.Find(layerName);
         if (layersParent != null)
         {
             foreach (Transform ly in layersParent)
@@ -61,13 +66,11 @@ public class ButtonActions : MonoBehaviour
 
             SetAllLowLayer();
 
-            if (layersParent.childCount > 0)
+            if (layersParent.childCount == 0)
             {
-                Debug.Log("layerParent has " + layersParent.childCount + " children.");
-                return;
+                Debug.Log("layerParent has no children. Destroying parent.");
+                Destroy(layersParent.gameObject);
             }
-
-            Destroy(layersParent.gameObject);
         }
     }
 
@@ -79,7 +82,7 @@ public class ButtonActions : MonoBehaviour
         }
     }
 
-    private void SetAllUnInteractable()
+    private void SetAllInteractable()
     {
         foreach (Button btn in buttons)
         {
@@ -90,7 +93,7 @@ public class ButtonActions : MonoBehaviour
     public void ActivateLayer(int layerIndex)
     {
         SetAllLowLayer();
-        SetAllUnInteractable();
+        SetAllInteractable();
         if (layerIndex >= 0 && layerIndex < layers.Count)
         {
             layers[layerIndex].transform.SetParent(highLayer.transform);
