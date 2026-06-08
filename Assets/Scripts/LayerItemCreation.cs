@@ -91,10 +91,20 @@ public class LayerItemCreation : MonoBehaviour
         {
             if (itemsByLayer.ContainsKey(i))
             {
+                Color[] colors = new Color[]
+                {
+                    Color.red,
+                    Color.green,
+                    Color.blue,
+                    Color.yellow,
+                    Color.cyan,
+                    Color.magenta,
+                };
                 foreach (ItemsScriptableObject item in itemsByLayer[i])
                 {
                     GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
                     newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
+                    newItem.GetComponent<Image>().color = colors[i % colors.Length];
                     //Debug.LogWarning("Setting item: " + item.itemName + " in category: " + item.itemCategory);
                     currentItemCount++;
 
@@ -108,6 +118,8 @@ public class LayerItemCreation : MonoBehaviour
                         itemPosition.x += itemOffsetPositionX;
                     }
                 }
+                currentItemCount = 0;
+                itemPosition = itemStartPosition;
             }
         }
     }

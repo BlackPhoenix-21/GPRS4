@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: t1
-  m_EditorClassIdentifier: Assembly-CSharp::ItemsScriptableObject
-  itemName: t1
+  m_Script: {fileID: 11500000, guid: f43aa70994236644785f8088c2b42ddf, type: 3}
+  m_Name: New Item 6
+  m_EditorClassIdentifier: 
+  itemName: 
   itemImage: {fileID: 0}
   characterLayer: 1
-  itemCategory: 1
+  itemCategory: 3
