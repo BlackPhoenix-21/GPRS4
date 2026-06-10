@@ -18,8 +18,8 @@ public class LayerItemCreation : MonoBehaviour
     private Dictionary<int, List<ItemsScriptableObject>> itemsByLayer =
         new Dictionary<int, List<ItemsScriptableObject>>();
 
-    private float itemOffsetPositionY = 100f;
-    private float itemOffsetPositionX = 100f;
+    private float itemOffsetPositionY = 250f;
+    private float itemOffsetPositionX = 250f;
     private int itemsPerRow = 3;
     private int currentItemCount = 0;
     private Vector2 itemPosition;
@@ -91,20 +91,11 @@ public class LayerItemCreation : MonoBehaviour
         {
             if (itemsByLayer.ContainsKey(i))
             {
-                Color[] colors = new Color[]
-                {
-                    Color.red,
-                    Color.green,
-                    Color.blue,
-                    Color.yellow,
-                    Color.cyan,
-                    Color.magenta,
-                };
                 foreach (ItemsScriptableObject item in itemsByLayer[i])
                 {
                     GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
                     newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
-                    newItem.GetComponent<Image>().color = colors[i % colors.Length];
+                    newItem.GetComponent<Image>().sprite = item.itemImage;
                     //Debug.LogWarning("Setting item: " + item.itemName + " in category: " + item.itemCategory);
                     currentItemCount++;
 

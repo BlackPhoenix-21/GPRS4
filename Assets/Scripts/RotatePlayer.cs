@@ -11,8 +11,10 @@ public class RotatePlayer : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     void Update()
     {
-        if (!isDragging) return;
-        if (Mouse.current == null) return;
+        if (!isDragging)
+            return;
+        if (Mouse.current == null)
+            return;
 
         float mouseX = Mouse.current.delta.ReadValue().x;
         character.Rotate(0, -mouseX * rotationSpeed * Time.deltaTime, 0);
