@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43aa70994236644785f8088c2b42ddf, type: 3}
+  m_Name: Body2
+  m_EditorClassIdentifier: 
+  itemName: Pulli_1
+  itemImage: {fileID: 1365229837, guid: 5476c9f23e1c83e4fbc7c25bad6c4e9b, type: 3}
+  characterLayer: 1
+  itemCategory: 1

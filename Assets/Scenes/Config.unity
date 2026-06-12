@@ -383,6 +383,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 98d03792918594043bf67d5f296f56cd, type: 2}
   - {fileID: 11400000, guid: ef98cd734284c0e44995b7569109d190, type: 2}
   - {fileID: 11400000, guid: 6f5f71af53c59e54984840dd2b2796f6, type: 2}
+  - {fileID: 11400000, guid: 7c180915d0ce5b141a2d7109e1f6da22, type: 2}
+  - {fileID: 11400000, guid: 80d7ad2fedad87048a6ea528813a8f20, type: 2}
+  - {fileID: 11400000, guid: 6a273bd6866401744af67ec0d5f5c087, type: 2}
+  - {fileID: 11400000, guid: dccb2e79245b75d4ab397da23f952a4e, type: 2}
+  - {fileID: 11400000, guid: 80384be00a13ab444a0d82c85321d22f, type: 2}
+  - {fileID: 11400000, guid: 0fdca64423bf14a4db326807ade075fb, type: 2}
+  - {fileID: 11400000, guid: 82152839b51e77f498327b912df1684a, type: 2}
+  - {fileID: 11400000, guid: e671a503881e14d478ff981ae11cd275, type: 2}
+  - {fileID: 11400000, guid: 0054a8acc1588e64f997d2702a023fdc, type: 2}
 --- !u!1 &432967045
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,13 +586,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520547546}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 119319395}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
 --- !u!65 &520547548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -657,7 +666,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520547546}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -6175003694416352950, guid: d60cd068227196842898071453e8f95f, type: 3}
 --- !u!1 &527533452
 GameObject:
   m_ObjectHideFlags: 0
@@ -2946,9 +2955,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  field of view: 42
+  orthographic: 1
+  orthographic size: 1.85
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
