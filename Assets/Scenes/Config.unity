@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemStartPosition: {x: 120, y: 400}
-  itemPrefab: {fileID: 7250076360626665878, guid: 79f37bc271973f84594520717f6e6d7c, type: 3}
+  itemPrefab: {fileID: 6269593727680383330, guid: 477255b302e42a54583af12a968b0bbf, type: 3}
   itemsData:
   - {fileID: 11400000, guid: e6f22d64d27025341943d052a812af87, type: 2}
   - {fileID: 11400000, guid: 6e173ac14a32c304796ff7ea40a20f90, type: 2}

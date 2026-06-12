@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -95,7 +96,10 @@ public class LayerItemCreation : MonoBehaviour
                 {
                     GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
                     newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
-                    newItem.GetComponent<Image>().sprite = item.itemImage;
+                    newItem.GetComponentInChildren<Button>().GetComponent<Image>().sprite =
+                        item.itemImage;
+                    newItem.GetComponentInChildren<TMP_Text>().text = item.itemName;
+
                     //Debug.LogWarning("Setting item: " + item.itemName + " in category: " + item.itemCategory);
                     currentItemCount++;
 
