@@ -98,7 +98,6 @@ public class ButtonActions : MonoBehaviour
         {
             layers[layerIndex].transform.SetParent(highLayer.transform);
             buttons[layerIndex].interactable = false;
-            Debug.Log("Activated Layer: " + layerIndex);
         }
         else
         {
