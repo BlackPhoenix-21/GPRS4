@@ -58,6 +58,13 @@ public class ButtonActions : MonoBehaviour
         Transform layersParent = canvas.transform.Find(layerName);
         if (layersParent != null)
         {
+            if (layersParent.childCount == 0)
+            {
+                Debug.Log("layerParent has no children. Destroying parent.");
+                Destroy(layersParent.gameObject);
+                return;
+            }
+
             foreach (Transform ly in layersParent)
             {
                 layers.Add(ly.gameObject);
@@ -65,12 +72,6 @@ public class ButtonActions : MonoBehaviour
             }
 
             SetAllLowLayer();
-
-            if (layersParent.childCount == 0)
-            {
-                Debug.Log("layerParent has no children. Destroying parent.");
-                Destroy(layersParent.gameObject);
-            }
         }
     }
 

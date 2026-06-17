@@ -23,9 +23,8 @@ public class SaveFileManager : MonoBehaviour
     private void Start()
     {
         return;
-#pragma warning disable CS0162 // Unreachable code detected
         saveData.characterData = new CharacterData();
-#pragma warning restore CS0162 // Unreachable code detected
+
         saveData.characterData.characterLayers.AddRange(
             Enum.GetValues(typeof(CharacterLayer)) as CharacterLayer[]
         );

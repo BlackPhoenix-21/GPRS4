@@ -106,11 +106,9 @@ public class LayerItemCreation : MonoBehaviour
                     Button btn = newItem.GetComponentInChildren<Button>();
                     btn.GetComponent<Image>().sprite = item.itemImage;
 
+                    int itemIndex = itemsByLayer[i].IndexOf(item);
                     btn.onClick.AddListener(() =>
-                        characterDesigner.ActivateItem(
-                            item.characterLayer,
-                            item.itemCategory.GetHashCode()
-                        )
+                        characterDesigner.ActivateItem(item.characterLayer, itemIndex)
                     );
 
                     newItem.GetComponentInChildren<TMP_Text>().text = item.itemName;
