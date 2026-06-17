@@ -51,7 +51,7 @@ public class CharacterDesigner : MonoBehaviour
             {
                 foreach (var item in layerItems[layer.Key])
                 {
-                    Debug.Log($"  Item: {item.name}");
+                    Debug.Log($"Item: {item.name}");
                 }
             }
         }
@@ -68,10 +68,13 @@ public class CharacterDesigner : MonoBehaviour
             {
                 continue;
             }
-
+            Debug.Log($"Processing layer: {layer.name}");
             characterLayers.Add((CharacterLayer)layerIndex, layer);
-            foreach (GameObject item in layer.transform)
+
+            for (int j = 0; j < layer.transform.childCount; j++)
             {
+                GameObject item = layer.transform.GetChild(j).gameObject;
+                Debug.Log($"Processing item: {item.name}");
                 if (!layerItems.ContainsKey((CharacterLayer)layerIndex))
                 {
                     layerItems[(CharacterLayer)layerIndex] = new List<GameObject>();
@@ -79,10 +82,11 @@ public class CharacterDesigner : MonoBehaviour
                 layerItems[(CharacterLayer)layerIndex].Add(item);
             }
             layerIndex++;
+            Debug.Log("\n");
         }
     }
 
-    private void ActivateItem(CharacterLayer layer, int itemIndex)
+    public void ActivateItem(CharacterLayer layer, int itemIndex)
     {
         if (layerItems.ContainsKey(layer) && itemIndex < layerItems[layer].Count)
         {

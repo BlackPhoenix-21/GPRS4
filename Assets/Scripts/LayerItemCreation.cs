@@ -88,6 +88,13 @@ public class LayerItemCreation : MonoBehaviour
             return;
         }
 
+        CharacterDesigner characterDesigner = FindAnyObjectByType<CharacterDesigner>();
+        if (characterDesigner == null)
+        {
+            Debug.LogError("CharacterDesigner not found in scene");
+            return;
+        }
+
         for (int i = 0; i < layerItemsParent.Count; i++)
         {
             if (itemsByLayer.ContainsKey(i))
@@ -96,8 +103,16 @@ public class LayerItemCreation : MonoBehaviour
                 {
                     GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
                     newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
-                    newItem.GetComponentInChildren<Button>().GetComponent<Image>().sprite =
-                        item.itemImage;
+                    Button btn = newItem.GetComponentInChildren<Button>();
+                    btn.GetComponent<Image>().sprite = item.itemImage;
+
+                    btn.onClick.AddListener(() =>
+                        characterDesigner.ActivateItem(
+                            item.characterLayer,
+                            item.itemCategory.GetHashCode()
+                        )
+                    );
+
                     newItem.GetComponentInChildren<TMP_Text>().text = item.itemName;
 
                     //Debug.LogWarning("Setting item: " + item.itemName + " in category: " + item.itemCategory);
