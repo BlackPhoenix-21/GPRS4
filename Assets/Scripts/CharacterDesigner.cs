@@ -39,6 +39,11 @@ public class CharacterDesigner : MonoBehaviour
         }
 
         InitializeCharacterLayers();
+        foreach (var item in layerItems)
+        {
+            item.Value.ForEach(i => i.SetActive(false)); // Deactivate all items by default
+            item.Value[0].SetActive(true); // Activate the first item in each layer by default
+        }
         Debuger();
     }
 
