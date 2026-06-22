@@ -105,4 +105,9 @@ public class ButtonActions : MonoBehaviour
             Debug.LogError("Falscher Layer Index: " + layerIndex);
         }
     }
+
+    public void ChangeMaterial(CharacterLayer layer, Material newMaterial)
+    {
+        FindAnyObjectByType<CharacterDesigner>().ChangeMaterial(layer, newMaterial);
+    }
 }

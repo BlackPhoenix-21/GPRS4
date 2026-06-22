@@ -6,8 +6,7 @@ public class CharacterDesigner : MonoBehaviour
 {
     public static CharacterDesigner Instance { get; private set; }
 
-    [SerializeField]
-    private GameObject player;
+    public GameObject player;
 
     private Dictionary<CharacterLayer, GameObject> characterLayers =
         new Dictionary<CharacterLayer, GameObject>();
@@ -103,6 +102,39 @@ public class CharacterDesigner : MonoBehaviour
         currentCharacterData.characterData.itemIndices[
             currentCharacterData.characterData.characterLayers.IndexOf(layer)
         ] = itemIndex;
+    }
+
+    public void ChangeMaterial(CharacterLayer layer, Material newMaterial)
+    {
+        if (characterLayers.ContainsKey(layer))
+        {
+            MeshRenderer[] renderers = characterLayers[layer]
+                .GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer renderer in renderers)
+            {
+                renderer.material = newMaterial;
+            }
+        }
+    }
+
+    public bool LoadCharacterData(CharacterData characterData)
+    {
+        currentCharacterData.characterData = characterData;
+        for (int i = 0; i < characterData.characterLayers.Count; i++)
+        {
+            ActivateItem(characterData.characterLayers[i], characterData.itemIndices[i]);
+        }
+        foreach (List<GameObject> items in layerItems.Values)
+        {
+            foreach (GameObject item in items)
+            {
+                if (!item.activeSelf)
+                {
+                    Destroy(item);
+                }
+            }
+        }
+        return true;
     }
 }
 
