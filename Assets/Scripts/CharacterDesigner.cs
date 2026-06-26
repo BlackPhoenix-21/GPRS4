@@ -13,6 +13,8 @@ public class CharacterDesigner : MonoBehaviour
     private Dictionary<CharacterLayer, List<GameObject>> layerItems =
         new Dictionary<CharacterLayer, List<GameObject>>();
 
+    public CharacterLayer currentLayer = CharacterLayer.None;
+
     private SaveData currentCharacterData;
 
     private void Awake()
@@ -104,11 +106,11 @@ public class CharacterDesigner : MonoBehaviour
         ] = itemIndex;
     }
 
-    public void ChangeMaterial(CharacterLayer layer, Material newMaterial)
+    public void ChangeMaterial(Material newMaterial)
     {
-        if (characterLayers.ContainsKey(layer))
+        if (characterLayers.ContainsKey(currentLayer))
         {
-            MeshRenderer[] renderers = characterLayers[layer]
+            MeshRenderer[] renderers = characterLayers[currentLayer]
                 .GetComponentsInChildren<MeshRenderer>();
             foreach (MeshRenderer renderer in renderers)
             {

@@ -32,6 +32,7 @@ public class ButtonActions : MonoBehaviour
         GetAllLayers(parentLayerName);
 
         layers[0].transform.SetParent(highLayer.transform);
+        CharacterDesigner.Instance.currentLayer = (CharacterLayer)0;
         buttons[0].interactable = false;
 
         OnFinishedSetup?.Invoke();
@@ -98,6 +99,7 @@ public class ButtonActions : MonoBehaviour
         if (layerIndex >= 0 && layerIndex < layers.Count)
         {
             layers[layerIndex].transform.SetParent(highLayer.transform);
+            CharacterDesigner.Instance.currentLayer = (CharacterLayer)layerIndex;
             buttons[layerIndex].interactable = false;
         }
         else
@@ -106,8 +108,8 @@ public class ButtonActions : MonoBehaviour
         }
     }
 
-    public void ChangeMaterial(CharacterLayer layer, Material newMaterial)
+    public void ChangeMaterial(Material newMaterial)
     {
-        FindAnyObjectByType<CharacterDesigner>().ChangeMaterial(layer, newMaterial);
+        CharacterDesigner.Instance.ChangeMaterial(newMaterial);
     }
 }
