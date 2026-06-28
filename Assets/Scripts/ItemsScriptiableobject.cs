@@ -4,7 +4,7 @@ using UnityEngine;
 public class ItemsScriptableObject : ScriptableObject
 {
     public string itemName;
+    public string assetname;
     public Sprite itemImage;
     public CharacterLayer characterLayer;
-    public ItemCategory itemCategory;
 }

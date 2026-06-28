@@ -25,9 +25,6 @@ public class LayerItemCreation : MonoBehaviour
     private int currentItemCount = 0;
     private Vector2 itemPosition;
 
-    private ItemCategory currentCategory = ItemCategory.None;
-    private List<GameObject> groupedItem = new List<GameObject>();
-
     private ButtonActions buttonActions;
 
     private void Start()
@@ -128,90 +125,6 @@ public class LayerItemCreation : MonoBehaviour
                 }
                 currentItemCount = 0;
                 itemPosition = itemStartPosition;
-            }
-        }
-    }
-
-    public void SetGroupedItem(ItemCategory category)
-    {
-        foreach (GameObject item in groupedItem)
-        {
-            Destroy(item);
-        }
-        groupedItem.Clear();
-        itemPosition = itemStartPosition;
-        currentItemCount = 0;
-        currentCategory = category;
-        if (buttonActions == null)
-        {
-            Debug.LogError("ButtonActions not found in scene");
-            return;
-        }
-
-        List<GameObject> layerItemsParent = buttonActions.layerItems;
-
-        for (int i = 0; i < layerItemsParent.Count; i++)
-        {
-            if (itemsByLayer.ContainsKey(i))
-            {
-                foreach (ItemsScriptableObject item in itemsByLayer[i])
-                {
-                    if (item.itemCategory != category)
-                    {
-                        continue;
-                    }
-
-                    GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
-                    newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
-                    groupedItem.Add(newItem);
-                    //Debug.LogWarning(
-                    //    "Setting item: " + item.itemName + " in category: " + category
-                    //);
-                    currentItemCount++;
-
-                    if (currentItemCount % itemsPerRow == 0)
-                    {
-                        itemPosition.x = itemStartPosition.x;
-                        itemPosition.y -= itemOffsetPositionY;
-                    }
-                    else
-                    {
-                        itemPosition.x += itemOffsetPositionX;
-                    }
-                }
-            }
-        }
-
-        if (EventSystem.current?.currentSelectedGameObject != null)
-        {
-            Button clickedButton =
-                EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-            if (clickedButton != null)
-            {
-                clickedButton.onClick.RemoveAllListeners();
-                clickedButton.onClick.AddListener(() => ClearGroupedItem());
-            }
-        }
-    }
-
-    public void ClearGroupedItem()
-    {
-        foreach (GameObject item in groupedItem)
-        {
-            Destroy(item);
-        }
-        groupedItem.Clear();
-        itemPosition = itemStartPosition;
-        currentItemCount = 0;
-
-        if (EventSystem.current?.currentSelectedGameObject != null)
-        {
-            Button clickedButton =
-                EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-            if (clickedButton != null)
-            {
-                clickedButton.onClick.RemoveAllListeners();
-                clickedButton.onClick.AddListener(() => SetGroupedItem(currentCategory));
             }
         }
     }
