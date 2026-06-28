@@ -138,6 +138,11 @@ public class CharacterDesigner : MonoBehaviour
         }
         return true;
     }
+
+    public Dictionary<CharacterLayer, List<GameObject>> GetLayerItems()
+    {
+        return layerItems;
+    }
 }
 
 public enum CharacterLayer

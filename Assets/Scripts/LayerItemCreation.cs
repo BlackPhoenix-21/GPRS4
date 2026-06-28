@@ -68,6 +68,33 @@ public class LayerItemCreation : MonoBehaviour
                 itemsByLayer[layerIndex].Add(item);
             }
         }
+
+        Dictionary<int, List<ItemsScriptableObject>> sortedItemsByLayer =
+            new Dictionary<int, List<ItemsScriptableObject>>();
+        Dictionary<CharacterLayer, List<GameObject>> itemsFBX =
+            CharacterDesigner.Instance.GetLayerItems();
+        foreach (var list in itemsFBX)
+        {
+            int index = (int)list.Key - 1; // Enum starts with None at 0
+            foreach (var fbx in list.Value)
+            {
+                ItemsScriptableObject matchingItem = new();
+                foreach (var item in itemsData)
+                {
+                    if (item.assetname == fbx.name)
+                    {
+                        matchingItem = item;
+                        break;
+                    }
+                }
+                if (matchingItem.assetname == null)
+                {
+                    Debug.LogWarning($"No matching item found for FBX: {fbx.name}");
+                    continue;
+                }
+                sortedItemsByLayer[index].Add(matchingItem);
+            }
+        }
     }
 
     private void SetUpItems()
