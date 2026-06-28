@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43aa70994236644785f8088c2b42ddf, type: 3}
   m_Name: Accessoires_1 9
   m_EditorClassIdentifier: 
-  itemName: Accessoire
+  itemName: Accessoire_10
   assetname: SM_Neck01
   itemImage: {fileID: 21300000, guid: 6997a4608ea59ad4ebdeb85042996238, type: 3}
   characterLayer: 5
