@@ -15,7 +15,7 @@ public class CharacterDesigner : MonoBehaviour
 
     public CharacterLayer currentLayer = CharacterLayer.None;
 
-    private SaveData currentCharacterData;
+    public SaveData currentCharacterData { get; private set; } = new SaveData();
 
     private void Awake()
     {
@@ -31,8 +31,6 @@ public class CharacterDesigner : MonoBehaviour
 
     private void Start()
     {
-        // Load CharacterData?
-        currentCharacterData = new SaveData();
         foreach (CharacterLayer layer in Enum.GetValues(typeof(CharacterLayer)))
         {
             currentCharacterData.characterData.characterLayers.Add(layer);
@@ -45,7 +43,7 @@ public class CharacterDesigner : MonoBehaviour
             item.Value.ForEach(i => i.SetActive(false)); // Deactivate all items by default
             item.Value[0].SetActive(true); // Activate the first item in each layer by default
         }
-        Debuger();
+        // Debuger();
     }
 
     private void Debuger()
@@ -63,6 +61,10 @@ public class CharacterDesigner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initializes the character layers by iterating through the child GameObjects of the player GameObject.
+    /// It populates the characterLayers dictionary with the corresponding CharacterLayer enum and GameObject.
+    /// </summary>
     private void InitializeCharacterLayers()
     {
         int layerIndex = 1; // Start from 1 to skip None
@@ -92,6 +94,12 @@ public class CharacterDesigner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Activates the specified item in the given CharacterLayer and deactivates all other items in that layer.
+    /// It also updates the currentCharacterData to reflect the selected item index for that layer.
+    /// </summary>
+    /// <param name="layer"></param>
+    /// <param name="itemIndex"></param>
     public void ActivateItem(CharacterLayer layer, int itemIndex)
     {
         if (layerItems.ContainsKey(layer) && itemIndex < layerItems[layer].Count)
@@ -106,6 +114,11 @@ public class CharacterDesigner : MonoBehaviour
         ] = itemIndex;
     }
 
+    /// <summary>
+    /// Changes the material of the currently active item in the specified CharacterLayer to the newMaterial provided.
+    /// It iterates through all MeshRenderer components in the active item and updates their material.
+    /// </summary>
+    /// <param name="newMaterial"></param>
     public void ChangeMaterial(Material newMaterial)
     {
         if (characterLayers.ContainsKey(currentLayer))
@@ -119,6 +132,12 @@ public class CharacterDesigner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Loads the character data from the provided CharacterData object and activates the corresponding items in each CharacterLayer.
+    /// It also destroys any inactive items in the layerItems dictionary to clean up the scene.
+    /// </summary>
+    /// <param name="characterData"></param>
+    /// <returns></returns>
     public bool LoadCharacterData(CharacterData characterData)
     {
         currentCharacterData.characterData = characterData;

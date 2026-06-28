@@ -5,36 +5,19 @@ using UnityEngine;
 
 public class SaveFileManager : MonoBehaviour
 {
-    public static SaveFileManager instance { get; private set; }
+    public static SaveFileManager Instance { get; private set; }
     private SaveData saveData = new SaveData();
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
-        return;
-        saveData.characterData = new CharacterData();
-
-        saveData.characterData.characterLayers.AddRange(
-            Enum.GetValues(typeof(CharacterLayer)) as CharacterLayer[]
-        );
-        foreach (CharacterLayer layer in saveData.characterData.characterLayers)
-        {
-            saveData.characterData.itemIndices.Add(UnityEngine.Random.Range(0, 3));
-        }
-
-        string json = JsonUtility.ToJson(saveData);
-        File.WriteAllText(Application.persistentDataPath + "/characterData.json", json);
     }
 
     public void SaveCharacter(SaveData characterData)
@@ -61,6 +44,7 @@ public class CharacterData
 [Serializable]
 public class SaveData
 {
+    // Extra subklasse um die Erweiterung von neuen Daten zur Speicherung zu ermöglichen, ohne die bestehende Struktur zu ändern.
     public CharacterData characterData = new CharacterData();
 
     public SaveData()

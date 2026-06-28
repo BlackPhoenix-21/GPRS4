@@ -108,6 +108,11 @@ public class ButtonActions : MonoBehaviour
         }
     }
 
+    public void SaveCharacter()
+    {
+        SaveFileManager.Instance.SaveCharacter(CharacterDesigner.Instance.currentCharacterData);
+    }
+
     public void ChangeMaterial(Material newMaterial)
     {
         CharacterDesigner.Instance.ChangeMaterial(newMaterial);

@@ -47,6 +47,10 @@ public class LayerItemCreation : MonoBehaviour
         SetUpItems();
     }
 
+    /// <summary>
+    /// Organizes the items by their corresponding CharacterLayer and stores them in a dictionary for easy access.
+    /// It also sorts the items based on the FBX GameObjects in the scene to ensure that the items are displayed in the correct order.
+    /// </summary>
     private void OrganizeItemsByLayer()
     {
         if (itemsData == null || itemsData.Length == 0)
@@ -97,6 +101,10 @@ public class LayerItemCreation : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets up the items in the UI by instantiating the item prefabs and assigning their properties based on the corresponding ItemsScriptableObject data.
+    /// It also sets up the button click events to activate the corresponding item in the CharacterDesigner when clicked.
+    /// </summary>
     private void SetUpItems()
     {
         if (buttonActions == null)
