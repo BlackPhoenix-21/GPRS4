@@ -143,7 +143,8 @@ public class LayerItemCreation : MonoBehaviour
                     GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
                     newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
                     Button btn = newItem.GetComponentInChildren<Button>();
-                    btn.GetComponentInChildren<Image>().sprite = item.itemImage;
+                    Image[] img = newItem.GetComponentsInChildren<Image>();
+                    img[1].sprite = item.itemImage;
 
                     int itemIndex = itemsByLayer[i].IndexOf(item);
                     btn.onClick.AddListener(() =>
