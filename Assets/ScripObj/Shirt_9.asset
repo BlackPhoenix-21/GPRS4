@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Shirt_9
   assetname: Top_KoketteSleeves
-  itemImage: {fileID: 460413015, guid: 40b025eef6f4df54f8d0f30aa899224b, type: 3}
+  itemImage: {fileID: 21300000, guid: 6997a4608ea59ad4ebdeb85042996238, type: 3}
   characterLayer: 2
