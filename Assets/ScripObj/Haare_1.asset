@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Haare_1
   assetname: wolke
-  itemImage: {fileID: 460413015, guid: 40b025eef6f4df54f8d0f30aa899224b, type: 3}
+  itemImage: {fileID: -225582593, guid: 299bd6e1ff99fa94f8b3b4b2c7a55658, type: 3}
   characterLayer: 1
