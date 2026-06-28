@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43aa70994236644785f8088c2b42ddf, type: 3}
+  m_Name: Pants_7
+  m_EditorClassIdentifier: 
+  itemName: Pants_7
+  assetname: Skirt_B (2)
+  itemImage: {fileID: -1541963728, guid: 905bf6865d7e7774a98a58b997b38f1b, type: 3}
+  characterLayer: 3
