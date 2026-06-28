@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Accessoires_1
   m_EditorClassIdentifier: 
   itemName: Accessoire
-  assetname: SM_Bracelet
+  assetname: SM_Bracelet_01
   itemImage: {fileID: 460413015, guid: 40b025eef6f4df54f8d0f30aa899224b, type: 3}
   characterLayer: 5

@@ -66,23 +66,27 @@ public class LayerItemCreation : MonoBehaviour
 
         foreach (ItemsScriptableObject item in itemsData)
         {
-            int layerIndex = (int)item.characterLayer - 1; // Enum starts with None at 0
+            int layerIndex = (int)item.characterLayer - 1;
             if (itemsByLayer.ContainsKey(layerIndex))
-            {
                 itemsByLayer[layerIndex].Add(item);
-            }
         }
 
         Dictionary<int, List<ItemsScriptableObject>> sortedItemsByLayer =
             new Dictionary<int, List<ItemsScriptableObject>>();
+
         Dictionary<CharacterLayer, List<GameObject>> itemsFBX =
             CharacterDesigner.Instance.GetLayerItems();
+
         foreach (var list in itemsFBX)
         {
-            int index = (int)list.Key - 1; // Enum starts with None at 0
+            int index = (int)list.Key - 1;
+
+            if (!sortedItemsByLayer.ContainsKey(index))
+                sortedItemsByLayer[index] = new List<ItemsScriptableObject>();
+
             foreach (var fbx in list.Value)
             {
-                ItemsScriptableObject matchingItem = new();
+                ItemsScriptableObject matchingItem = null;
                 foreach (var item in itemsData)
                 {
                     if (item.assetname == fbx.name)
@@ -91,14 +95,17 @@ public class LayerItemCreation : MonoBehaviour
                         break;
                     }
                 }
-                if (matchingItem.assetname == null)
+
+                if (matchingItem == null)
                 {
                     Debug.LogWarning($"No matching item found for FBX: {fbx.name}");
                     continue;
                 }
+
                 sortedItemsByLayer[index].Add(matchingItem);
             }
         }
+        itemsByLayer = sortedItemsByLayer;
     }
 
     /// <summary>
@@ -136,7 +143,7 @@ public class LayerItemCreation : MonoBehaviour
                     GameObject newItem = Instantiate(itemPrefab, layerItemsParent[i].transform);
                     newItem.GetComponent<RectTransform>().anchoredPosition = itemPosition;
                     Button btn = newItem.GetComponentInChildren<Button>();
-                    btn.GetComponent<Image>().sprite = item.itemImage;
+                    btn.GetComponentInChildren<Image>().sprite = item.itemImage;
 
                     int itemIndex = itemsByLayer[i].IndexOf(item);
                     btn.onClick.AddListener(() =>

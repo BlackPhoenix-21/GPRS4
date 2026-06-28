@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pants_2
   m_EditorClassIdentifier: 
   itemName: Pants_2
-  assetname: P_C (2)
+  assetname: P_C (1)
   itemImage: {fileID: -204163512, guid: f765d525f64b75d41ba58519850494f1, type: 3}
   characterLayer: 3

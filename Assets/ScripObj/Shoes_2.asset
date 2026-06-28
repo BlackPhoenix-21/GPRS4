@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Shoes_2
   m_EditorClassIdentifier: 
   itemName: Shoes_2
-  assetname: boots02_nolace (1)
+  assetname: Boots02_nolace (1)
   itemImage: {fileID: 21300000, guid: dd762b3958c332b4e83a2e429ea356c6, type: 3}
   characterLayer: 4

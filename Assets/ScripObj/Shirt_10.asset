@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Shirt_10
   m_EditorClassIdentifier: 
   itemName: Shirt_10
-  assetname: Top_Plainshirt
+  assetname: Top_PlainShirt
   itemImage: {fileID: 460413015, guid: 40b025eef6f4df54f8d0f30aa899224b, type: 3}
   characterLayer: 2
