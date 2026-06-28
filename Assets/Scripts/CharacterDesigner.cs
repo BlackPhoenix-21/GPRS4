@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterDesigner : MonoBehaviour
 {
     public static CharacterDesigner Instance { get; private set; }
+    public event Action OnFinishedSetup;
 
     public GameObject player;
 
@@ -36,14 +37,18 @@ public class CharacterDesigner : MonoBehaviour
             currentCharacterData.characterData.characterLayers.Add(layer);
             currentCharacterData.characterData.itemIndices.Add(0); // Default to first item
         }
+        FindAnyObjectByType<ButtonActions>().OnFinishedSetup += SetUp;
+    }
 
+    private void SetUp()
+    {
         InitializeCharacterLayers();
         foreach (var item in layerItems)
         {
             item.Value.ForEach(i => i.SetActive(false)); // Deactivate all items by default
             item.Value[0].SetActive(true); // Activate the first item in each layer by default
         }
-        // Debuger();
+        OnFinishedSetup?.Invoke();
     }
 
     private void Debuger()
@@ -76,13 +81,11 @@ public class CharacterDesigner : MonoBehaviour
             {
                 continue;
             }
-            Debug.Log($"Processing layer: {layer.name}");
             characterLayers.Add((CharacterLayer)layerIndex, layer);
 
             for (int j = 0; j < layer.transform.childCount; j++)
             {
                 GameObject item = layer.transform.GetChild(j).gameObject;
-                Debug.Log($"Processing item: {item.name}");
                 if (!layerItems.ContainsKey((CharacterLayer)layerIndex))
                 {
                     layerItems[(CharacterLayer)layerIndex] = new List<GameObject>();
@@ -90,8 +93,13 @@ public class CharacterDesigner : MonoBehaviour
                 layerItems[(CharacterLayer)layerIndex].Add(item);
             }
             layerIndex++;
-            Debug.Log("\n");
         }
+        Dictionary<CharacterLayer, GameObject> temp = new Dictionary<CharacterLayer, GameObject>();
+        for (int i = 1; i < characterLayers.Count + 1; i++)
+        {
+            temp.Add((CharacterLayer)i, characterLayers[(CharacterLayer)i]);
+        }
+        characterLayers = temp;
     }
 
     /// <summary>
@@ -102,6 +110,12 @@ public class CharacterDesigner : MonoBehaviour
     /// <param name="itemIndex"></param>
     public void ActivateItem(CharacterLayer layer, int itemIndex)
     {
+        Debug.Log($"Activating item at index {itemIndex} in layer {layer}");
+        if (!layerItems.ContainsKey(layer))
+        {
+            Debug.LogWarning($"Layer {layer} does not exist in layerItems.");
+            return;
+        }
         if (layerItems.ContainsKey(layer) && itemIndex < layerItems[layer].Count)
         {
             for (int i = 0; i < layerItems[layer].Count; i++)
@@ -167,10 +181,10 @@ public class CharacterDesigner : MonoBehaviour
 public enum CharacterLayer
 {
     None,
+    Accessories,
     Hair,
     Shirt,
     Pants,
     Shoes,
-    Accessories,
     Face,
 }

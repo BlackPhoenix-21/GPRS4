@@ -32,7 +32,7 @@ public class LayerItemCreation : MonoBehaviour
         buttonActions = FindAnyObjectByType<ButtonActions>();
         if (buttonActions != null)
         {
-            buttonActions.OnFinishedSetup += SetUp;
+            CharacterDesigner.Instance.OnFinishedSetup += SetUp;
         }
         else
         {
@@ -59,7 +59,7 @@ public class LayerItemCreation : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < (int)CharacterLayer.Accessories + 1; i++)
+        for (int i = 0; i < (int)CharacterLayer.Face + 1; i++)
         {
             itemsByLayer[i] = new List<ItemsScriptableObject>();
         }
@@ -148,8 +148,12 @@ public class LayerItemCreation : MonoBehaviour
 
                     int itemIndex = itemsByLayer[i].IndexOf(item);
                     btn.onClick.AddListener(() =>
-                        characterDesigner.ActivateItem(item.characterLayer, itemIndex)
-                    );
+                    {
+                        characterDesigner.ActivateItem(item.characterLayer, itemIndex);
+                        Debug.Log(
+                            $"Button clicked for item: {item.itemName} in layer: {item.characterLayer}"
+                        );
+                    });
 
                     newItem.GetComponentInChildren<TMP_Text>().text = item.itemName;
 
