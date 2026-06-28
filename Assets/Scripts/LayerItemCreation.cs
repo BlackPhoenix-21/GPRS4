@@ -147,9 +147,10 @@ public class LayerItemCreation : MonoBehaviour
                     img[1].sprite = item.itemImage;
 
                     int itemIndex = itemsByLayer[i].IndexOf(item);
+                    int capturedItemIndex = itemIndex; // capture for lambda closure
                     btn.onClick.AddListener(() =>
                     {
-                        characterDesigner.ActivateItem(item.characterLayer, itemIndex);
+                        characterDesigner.ActivateItem(item.characterLayer, capturedItemIndex);
                         Debug.Log(
                             $"Button clicked for item: {item.itemName} in layer: {item.characterLayer}"
                         );
