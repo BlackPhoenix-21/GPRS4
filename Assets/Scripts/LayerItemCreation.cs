@@ -147,12 +147,13 @@ public class LayerItemCreation : MonoBehaviour
                     img[1].sprite = item.itemImage;
 
                     int itemIndex = itemsByLayer[i].IndexOf(item);
-                    int capturedItemIndex = itemIndex; // capture for lambda closure
+                    int capturedItemIndex = itemIndex;
+                    CharacterLayer capturedLayer = (CharacterLayer)(i + 1); // i is 0-based, CharacterLayer starts at 1
                     btn.onClick.AddListener(() =>
                     {
-                        characterDesigner.ActivateItem(item.characterLayer, capturedItemIndex);
+                        characterDesigner.ActivateItem(capturedLayer, capturedItemIndex);
                         Debug.Log(
-                            $"Button clicked for item: {item.itemName} in layer: {item.characterLayer}"
+                            $"Button clicked for item: {item.itemName} in layer: {capturedLayer}"
                         );
                     });
 
