@@ -152,9 +152,6 @@ public class LayerItemCreation : MonoBehaviour
                     btn.onClick.AddListener(() =>
                     {
                         characterDesigner.ActivateItem(capturedLayer, capturedItemIndex);
-                        Debug.Log(
-                            $"Button clicked for item: {item.itemName} in layer: {capturedLayer}"
-                        );
                     });
 
                     newItem.GetComponentInChildren<TMP_Text>().text = item.itemName;

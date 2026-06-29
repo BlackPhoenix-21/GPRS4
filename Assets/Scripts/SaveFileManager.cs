@@ -24,7 +24,6 @@ public class SaveFileManager : MonoBehaviour
     {
         string json = JsonUtility.ToJson(characterData);
         File.WriteAllText(Application.persistentDataPath + "/characterData.json", json);
-        Debug.Log("Character saved!");
     }
 }
 
@@ -33,11 +32,13 @@ public class CharacterData
 {
     public List<CharacterLayer> characterLayers = new List<CharacterLayer>();
     public List<int> itemIndices = new List<int>();
+    public List<string> colorIndices = new List<string>();
 
     public CharacterData()
     {
         characterLayers = new List<CharacterLayer>();
         itemIndices = new List<int>();
+        colorIndices = new List<string>();
     }
 }
 

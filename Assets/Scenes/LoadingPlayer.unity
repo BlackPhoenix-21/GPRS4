@@ -774,6 +774,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1896798898}
+  materials:
+  - {fileID: 2100000, guid: ed80845e5ac34914a9462ab651413d39, type: 2}
+  - {fileID: 2100000, guid: c4f34e7bb1e9ffb4eb723a3021658cbe, type: 2}
+  - {fileID: 2100000, guid: 0041cff60dba1714f80b87c56c3804e6, type: 2}
+  - {fileID: 2100000, guid: 23c7e0a3a487b304f97940c10bfab412, type: 2}
+  - {fileID: 2100000, guid: 8caedea9ff539fe4b834a320415b5f8c, type: 2}
+  - {fileID: 2100000, guid: 49fed1a3033be7e41ab5f89d55510eb7, type: 2}
+  - {fileID: 2100000, guid: f0341161927482e49bbf3bce024fd33a, type: 2}
+  - {fileID: 2100000, guid: c1daf51b4e8ba714499af813c8eb13b1, type: 2}
+  - {fileID: 2100000, guid: 6e9a4bc6d0a2fed4da84e9feb9611c04, type: 2}
 --- !u!4 &1626986075
 Transform:
   m_ObjectHideFlags: 0

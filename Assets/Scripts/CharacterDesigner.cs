@@ -16,8 +16,12 @@ public class CharacterDesigner : MonoBehaviour
         new Dictionary<CharacterLayer, List<GameObject>>();
 
     public CharacterLayer currentLayer = CharacterLayer.None;
+    public Material defaultMaterial;
 
     public SaveData currentCharacterData = new SaveData();
+
+    [HideInInspector]
+    public List<Material> materials = new List<Material>();
 
     private void Awake()
     {
@@ -36,7 +40,8 @@ public class CharacterDesigner : MonoBehaviour
         foreach (CharacterLayer layer in Enum.GetValues(typeof(CharacterLayer)))
         {
             currentCharacterData.characterData.characterLayers.Add(layer);
-            currentCharacterData.characterData.itemIndices.Add(0); // Default to first item
+            currentCharacterData.characterData.itemIndices.Add(0);
+            currentCharacterData.characterData.colorIndices.Add("");
         }
         try
         {
@@ -56,6 +61,17 @@ public class CharacterDesigner : MonoBehaviour
             currentCharacterData.characterData.itemIndices[
                 currentCharacterData.characterData.characterLayers.IndexOf(item.Key)
             ] = randomIndex;
+            currentCharacterData.characterData.colorIndices[
+                currentCharacterData.characterData.characterLayers.IndexOf(item.Key)
+            ] = defaultMaterial.name; // Set the default material name for each layer
+            item.Value.ForEach(i =>
+            {
+                MeshRenderer[] renderers = i.GetComponentsInChildren<MeshRenderer>();
+                foreach (MeshRenderer renderer in renderers)
+                {
+                    renderer.material = defaultMaterial; // Set the default material for all items
+                }
+            });
         }
         OnFinishedSetup?.Invoke();
     }
@@ -144,7 +160,8 @@ public class CharacterDesigner : MonoBehaviour
     /// </summary>
     /// <param name="layer"></param>
     /// <param name="itemIndex"></param>
-    public void ActivateItemLoading(CharacterLayer layer, int itemIndex)
+    /// <param name="material"></param>
+    public void ActivateItemLoading(CharacterLayer layer, int itemIndex, Material material)
     {
         if (!layerItems.ContainsKey(layer))
         {
@@ -155,6 +172,12 @@ public class CharacterDesigner : MonoBehaviour
             for (int i = 0; i < layerItems[layer].Count; i++)
             {
                 layerItems[layer][i].SetActive(i == itemIndex);
+            }
+            MeshRenderer[] renderers = characterLayers[layer]
+                .GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer renderer in renderers)
+            {
+                renderer.material = material;
             }
         }
         currentCharacterData.characterData.itemIndices[
@@ -177,6 +200,9 @@ public class CharacterDesigner : MonoBehaviour
             {
                 renderer.material = newMaterial;
             }
+            currentCharacterData.characterData.colorIndices[
+                currentCharacterData.characterData.characterLayers.IndexOf(currentLayer)
+            ] = newMaterial.name;
         }
     }
 
@@ -190,7 +216,22 @@ public class CharacterDesigner : MonoBehaviour
         CharacterData characterData = currentCharacterData.characterData;
         for (int i = 0; i < characterData.characterLayers.Count; i++)
         {
-            ActivateItemLoading(characterData.characterLayers[i], characterData.itemIndices[i]);
+            Material material =
+                (
+                    i < characterData.colorIndices.Count
+                    && !string.IsNullOrEmpty(characterData.colorIndices[i])
+                )
+                    ? materials.Find(m => m.name == characterData.colorIndices[i])
+                    : null;
+
+            if (material == null)
+                material = defaultMaterial;
+
+            ActivateItemLoading(
+                characterData.characterLayers[i],
+                characterData.itemIndices[i],
+                material
+            );
         }
         foreach (List<GameObject> items in layerItems.Values)
         {

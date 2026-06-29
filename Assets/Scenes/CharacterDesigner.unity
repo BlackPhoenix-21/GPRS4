@@ -283,10 +283,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 119319394}
   currentLayer: 0
+  defaultMaterial: {fileID: 2100000, guid: c1daf51b4e8ba714499af813c8eb13b1, type: 2}
   currentCharacterData:
     characterData:
       characterLayers: 
       itemIndices: 
+      colorIndices: []
+  materials: []
 --- !u!4 &114322940
 Transform:
   m_ObjectHideFlags: 0

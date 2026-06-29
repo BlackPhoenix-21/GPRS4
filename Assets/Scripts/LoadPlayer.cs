@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class LoadPlayer : MonoBehaviour
 {
     public GameObject player;
+    public List<Material> materials = new List<Material>();
     private CharacterDesigner cd;
 
     private void Start()
@@ -14,6 +16,8 @@ public class LoadPlayer : MonoBehaviour
         cd = player.AddComponent<CharacterDesigner>();
         cd.player = player;
         cd.currentCharacterData = data;
+        cd.materials = materials;
+        cd.defaultMaterial = materials.Find(m => m.name == "Schwarz");
         cd.LoadingCharacterData += LoadPlayerData;
         cd.InitializeCharacterLayers();
     }
