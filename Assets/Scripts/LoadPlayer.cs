@@ -1,19 +1,31 @@
+using System.IO;
 using UnityEngine;
 
 public class LoadPlayer : MonoBehaviour
 {
     public GameObject player;
+    private CharacterDesigner cd;
 
-    public void LoadPlayerData(SaveData data)
+    private void Start()
     {
-        CharacterDesigner cd = player.AddComponent<CharacterDesigner>();
+        string json = File.ReadAllText(Application.persistentDataPath + "/characterData.json");
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+        cd = player.AddComponent<CharacterDesigner>();
         cd.player = player;
-        bool finished = cd.LoadCharacterData(data.characterData);
+        cd.currentCharacterData = data;
+        cd.LoadingCharacterData += LoadPlayerData;
+        cd.InitializeCharacterLayers();
+    }
+
+    public void LoadPlayerData()
+    {
+        bool finished = cd.LoadCharacterData();
 
         if (finished)
         {
             Destroy(cd);
-            Debug.Log("Player loaded successfully.");
+            //Debug.Log("Player loaded successfully.");
         }
         else
         {
